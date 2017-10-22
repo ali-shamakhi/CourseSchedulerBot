@@ -49,6 +49,7 @@ public class Main {
 
                     try {
                         conn.createStatement().execute("INSERT INTO log(text, user_id) VALUES(\"" + update.message().text() + "\", " + update.message().from().id() + ")");
+                        StateHandler.handleState(update.message(), conn);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
