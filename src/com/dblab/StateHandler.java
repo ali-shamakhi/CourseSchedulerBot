@@ -23,14 +23,14 @@ public class StateHandler {
             state = result.getString("state");
         }
         if (state == null) {
-            StateNewUser.validate(incomingMessage.chat().id());
             changeState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
+            StateNewUser.validate(incomingMessage);
         } else {
             if (state.equals(S_MAIN_SCREEN)) {
-                StateMainScreen.validate(incomingMessage.chat().id());
+                StateMainScreen.validate(incomingMessage);
             }
             else if (state.equals(S_FUNCTION_LIST)) {
-                StateFunctionList.validate(incomingMessage.chat().id());
+                StateFunctionList.validate(incomingMessage);
             }
             else {
                 System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.chat().id());
