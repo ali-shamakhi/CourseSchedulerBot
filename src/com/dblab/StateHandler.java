@@ -17,27 +17,27 @@ public class StateHandler {
     public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
 
     static void handleState(Message incomingMessage, final Connection connection) throws SQLException {
-        ResultSet result = connection.createStatement().executeQuery("SELET state from user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
+        ResultSet result = connection.createStatement().executeQuery("SELET state FROM user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
         String state = null;
         while (result.next()) {
             state = result.getString("state");
         }
         if (state == null) {
-            StateNewUser.validate(incomingMessage.from().id());
+            StateNewUser.validate(incomingMessage.chat().id());
         } else {
             if (state.equals(S_MAIN_SCREEN)) {
-                StateMainScreen.validate(incomingMessage.from().id());
+                StateMainScreen.validate(incomingMessage.chat().id());
             }
             else if (state.equals(S_FUNCTION_LIST)) {
-                StateFunctionList.validate(incomingMessage.from().id());
+                StateFunctionList.validate(incomingMessage.chat().id());
             }
             else {
-                System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.from().id());
+                System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.chat().id());
             }
         }
     }
 
-    static void changeState(int chatID, String newState, final Connection connection) throws SQLException {
+    static void changeState(long chatID, String newState, final Connection connection) throws SQLException {
         connection.createStatement().execute("UPDATE user_state_tbl SET state = \"" + newState + "\" WHERE chat_id = " + chatID);
     }
 }
