@@ -20,6 +20,7 @@ public class StateHandler {
         String state = null;
         while (result.next()) {
             state = result.getString("state");
+            break;
         }
         if (state == null) {
             StateNewUser.validate(incomingMessage);
