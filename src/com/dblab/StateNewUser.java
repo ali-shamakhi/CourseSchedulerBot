@@ -38,7 +38,7 @@ public class StateNewUser{
             }
         });
     }
-    static void changeStete (long chatID, String state, final Connection connection) throws SQLException {
+    static void setState(long chatID, String state, final Connection connection) throws SQLException {
         connection.createStatement().execute("INSERT INTO user_state_tbl (chat_id, state) VALUES (" + chatID + ",\"" + state + "\")");
     }
 }

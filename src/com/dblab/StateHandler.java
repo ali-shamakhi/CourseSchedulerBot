@@ -1,7 +1,6 @@
 package com.dblab;
 
 import com.pengrad.telegrambot.model.Message;
-import com.sun.glass.ui.EventLoop;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,16 +16,17 @@ public class StateHandler {
     public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
 
     static void handleState(Message incomingMessage, final Connection connection) throws SQLException {
-        ResultSet result = connection.createStatement().executeQuery("SELET state FROM user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
+        ResultSet result = connection.createStatement().executeQuery("SELECT state FROM user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
         String state = null;
         while (result.next()) {
             state = result.getString("state");
         }
         if (state == null) {
             StateNewUser.validate(incomingMessage);
-            StateNewUser.changeStete(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
+            StateNewUser.setState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
         } else {
             if (state.equals(S_MAIN_SCREEN)) {
+                changeState(incomingMessage.chat().id(), S_FUNCTION_LIST, connection);
                 StateMainScreen.validate(incomingMessage);
             }
             else if (state.equals(S_FUNCTION_LIST)) {
