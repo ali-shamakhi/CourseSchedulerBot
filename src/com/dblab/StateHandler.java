@@ -16,7 +16,7 @@ public class StateHandler {
     public static final String S_MAIN_SCREEN = "MAIN_SCREEN";
     public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
 
-    static void handleState(Message incomingMessage, final Connection connection) throws SQLException{
+    static void handleState(Message incomingMessage, final Connection connection) throws SQLException {
         ResultSet result = connection.createStatement().executeQuery("SELET state from user_state_tbl WHERE user_id = " + incomingMessage.from().id());
         String state = null;
         while (result.next()) {
@@ -35,5 +35,9 @@ public class StateHandler {
                 System.err.println("Unknown state " + state + " for user_id " + incomingMessage.from().id());
             }
         }
+    }
+
+    static void changeState(int userID, String newState, final Connection connection) throws SQLException {
+        connection.createStatement().execute("UPDATE user_state_tbl SET state = \"" + newState + "\"");
     }
 }
