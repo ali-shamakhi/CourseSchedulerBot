@@ -10,5 +10,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.github.pengrad:java-telegram-bot-api:3.4.0" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:6.0.6" level="project" />
   </component>
 </module>
