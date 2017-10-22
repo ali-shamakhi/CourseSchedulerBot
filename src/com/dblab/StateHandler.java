@@ -17,7 +17,7 @@ public class StateHandler {
     public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
 
     static void handleState(Message incomingMessage, final Connection connection) throws SQLException {
-        ResultSet result = connection.createStatement().executeQuery("SELET state from user_state_tbl WHERE user_id = " + incomingMessage.from().id());
+        ResultSet result = connection.createStatement().executeQuery("SELET state from user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
         String state = null;
         while (result.next()) {
             state = result.getString("state");
@@ -32,12 +32,12 @@ public class StateHandler {
                 StateFunctionList.validate(incomingMessage.from().id());
             }
             else {
-                System.err.println("Unknown state " + state + " for user_id " + incomingMessage.from().id());
+                System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.from().id());
             }
         }
     }
 
-    static void changeState(int userID, String newState, final Connection connection) throws SQLException {
-        connection.createStatement().execute("UPDATE user_state_tbl SET state = \"" + newState + "\"");
+    static void changeState(int chatID, String newState, final Connection connection) throws SQLException {
+        connection.createStatement().execute("UPDATE user_state_tbl SET state = \"" + newState + "\" WHERE chat_id = " + chatID);
     }
 }
