@@ -24,6 +24,7 @@ public class StateHandler {
         }
         if (state == null) {
             StateNewUser.validate(incomingMessage.chat().id());
+            changeState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
         } else {
             if (state.equals(S_MAIN_SCREEN)) {
                 StateMainScreen.validate(incomingMessage.chat().id());
