@@ -2,6 +2,12 @@ package com.dblab;
 
 
 import com.pengrad.telegrambot.Callback;
+import com.pengrad.telegrambot.model.request.ParseMode;
+import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.response.SendResponse;
+
+import java.io.IOException;
+import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -31,5 +37,8 @@ public class StateNewUser{
 
             }
         });
+    }
+    static void changeStete (long chatID, String state, final Connection connection) throws SQLException {
+        connection.createStatement().execute("INSERT INTO user_state_tbl (chat_id, state) VALUES (" + chatID + ",\"" + state + "\")");
     }
 }
