@@ -23,8 +23,8 @@ public class StateHandler {
             state = result.getString("state");
         }
         if (state == null) {
-            changeState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
-            StateNewUser.validate(incomingMessage);
+            StateNewUser.validate(incomingMessage.chat().id());
+            StateNewUser.changeStete(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
         } else {
             if (state.equals(S_MAIN_SCREEN)) {
                 StateMainScreen.validate(incomingMessage);
