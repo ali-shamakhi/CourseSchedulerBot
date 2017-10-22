@@ -1,8 +1,0 @@
-#!/bin/sh
-DBHOST=localhost
-DBUSER=bot_user
-DBPASS=botbotpass
-DBNAME=dblab_log
-mysqldump --host=$DBHOST --user=$DBUSER --password=$DBPASS --no-data $DBNAME > SQLVersionControl/vc.sql
-git add SQLVersionControl/vc.sql
-exit
