@@ -41,6 +41,7 @@ DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `UserID` int(10) unsigned DEFAULT NULL,
+  `State` varchar(128) NOT NULL,
   `MajorID` int(11) DEFAULT NULL,
   `Date` date DEFAULT NULL,
   `FirstName` varchar(128) DEFAULT NULL,
