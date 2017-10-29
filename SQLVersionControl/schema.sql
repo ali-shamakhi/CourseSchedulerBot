@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_coursescheduler
+-- Host: localhost    Database: dblab_log
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.19-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,39 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `major`
+-- Table structure for table `log`
 --
 
-DROP TABLE IF EXISTS `major`;
+DROP TABLE IF EXISTS `log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `major` (
-  `MajorID` int(11) NOT NULL AUTO_INCREMENT,
-  `MajorName` varchar(256) DEFAULT NULL,
-  `University` varchar(128) DEFAULT NULL,
-  `EnteranceYear` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`MajorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `log` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `text` text,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `student`
+-- Table structure for table `user_state_tbl`
 --
 
-DROP TABLE IF EXISTS `student`;
+DROP TABLE IF EXISTS `user_state_tbl`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `student` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `UserID` int(10) unsigned DEFAULT NULL,
-  `MajorID` int(11) DEFAULT NULL,
-  `Date` date DEFAULT NULL,
-  `FirstName` varchar(128) DEFAULT NULL,
-  `LastName` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `UserID_UNIQUE` (`UserID`),
-  KEY `FK_student_major_MajorID_idx` (`MajorID`),
-  CONSTRAINT `FK_student_major_MajorID` FOREIGN KEY (`MajorID`) REFERENCES `major` (`MajorID`) ON DELETE SET NULL ON UPDATE CASCADE
+CREATE TABLE `user_state_tbl` (
+  `chat_id` int(11) NOT NULL,
+  `state` varchar(32) NOT NULL,
+  PRIMARY KEY (`chat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
