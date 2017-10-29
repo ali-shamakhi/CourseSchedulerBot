@@ -10,17 +10,16 @@ public class StateHandler {
 
     public static final String S_MAIN_SCREEN = "MAIN_SCREEN";
     public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
+    public static final String S_REGISTRATION_GET_NAME = "REGISTRATION_GET_NAME";
 
     static void handleState(Message incomingMessage, final Connection connection) throws SQLException {
-        ResultSet result = connection.createStatement().executeQuery("SELECT state FROM user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
-        String state = null;
-        while (result.next()) {
-            state = result.getString("state");
-            break;
-        }
+//        ResultSet result = connection.createStatement().executeQuery("SELECT state FROM user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
+
+        String state = Communicator.getUserState(incomingMessage.chat().id());
         if (state == null) {
             StateNewUser.validate(incomingMessage);
-            StateNewUser.setState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
+//            StateNewUser.setState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
+            Communicator.setState(incomingMessage.chat().id(), S_REGISTRATION_GET_NAME);
         } else {
             if (state.equals(S_MAIN_SCREEN)) {
                 changeState(incomingMessage.chat().id(), S_FUNCTION_LIST, connection);
@@ -28,6 +27,9 @@ public class StateHandler {
             }
             else if (state.equals(S_FUNCTION_LIST)) {
                 StateFunctionList.validate(incomingMessage);
+            }
+            else if (state.equals(S_REGISTRATION_GET_NAME)) {
+
             }
             else {
                 System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.chat().id());
