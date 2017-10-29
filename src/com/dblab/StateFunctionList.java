@@ -13,7 +13,7 @@ public class StateFunctionList {
 
         SendMessage request;
 
-            request = new SendMessage(message.chat().id(), "*1.* Add course\n*2.* List courses\n*3.* Delete course")
+            request = new SendMessage(message.chat().id(), "1. Add course\n2. List courses\n3. Delete course")
                     .parseMode(ParseMode.Markdown)
                     .disableWebPagePreview(true)
                     .disableNotification(true);
