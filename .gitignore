@@ -77,3 +77,4 @@ hs_err_pid*
 ### Custom
 .idea/vsc.xml
 .idea/project-template.xml
+.idea/misc.xml
