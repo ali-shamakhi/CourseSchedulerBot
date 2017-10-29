@@ -5,21 +5,13 @@ import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
-
-import java.io.IOException;
-import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.model.Message;
-import com.pengrad.telegrambot.model.request.ParseMode;
-import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.response.SendResponse;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * Created by sanei on 10/22/2017.
- */
+import java.io.IOException;
+
 public class StateNewUser{
     static void validate(Message message) {
         SendMessage request = new SendMessage(message.chat().id(), "Welcome!\nPress /menu to see available functions.")

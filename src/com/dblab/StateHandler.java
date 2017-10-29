@@ -6,12 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by sanei on 10/22/2017.
- */
 public class StateHandler {
 
-//    public static final String S_NEW_USER = "NEW_USER";
     public static final String S_MAIN_SCREEN = "MAIN_SCREEN";
     public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
 
