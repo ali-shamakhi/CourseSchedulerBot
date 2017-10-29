@@ -22,7 +22,6 @@ public class Main {
         Connection connection = null;
 
         try {
-
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/dblab_log", LocalConfigs.USERNAME, LocalConfigs.PASSWORD);
         } catch (SQLException se) {
