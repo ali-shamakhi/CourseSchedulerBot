@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Main {
 
+
     private static String BOT_TOKEN = "339428453:AAHM90686AbdTuE-77Qa8cNaxkJU0arR7Ws";
 
     static TelegramBot bot = null;
