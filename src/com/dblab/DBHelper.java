@@ -39,9 +39,40 @@ public class DBHelper {
         _con.createStatement().execute("INSERT INTO student (UserID, State) VALUES (" + userID + ", \"" + StateNewUser.VALUE + "\")");
     }
 
+    public static final String FIELD_UserID = "UserID";
+    public static final String FIELD_State = "State";
+    public static final String FIELD_MajorID = "MajorID";
+    public static final String FIELD_Date = "Date";
+    public static final String FIELD_FirstName = "FirstName";
+    public static final String FIELD_LastName = "LastName";
+
+    private static boolean isStringType(String field) {
+        if (field.equals(FIELD_UserID)) return false;
+        else if (field.equals(FIELD_State)) return true;
+        else if (field.equals(FIELD_MajorID)) return false;
+        else if (field.equals(FIELD_Date)) return true;
+        else if (field.equals(FIELD_FirstName)) return true;
+        else if (field.equals(FIELD_LastName)) return true;
+        else return false;
+    }
+
     static void setStudentState(int userID, String state) throws SQLException {
-        _con.createStatement().execute("INSERT INTO student (UserID, State) VALUES (" + userID + ", \"" + state + "\")" +
-                "ON DUPLICATE KEY UPDATE State = \"" + state + "\"");
+        setStudentField(userID, FIELD_State, state);
+    }
+
+    /**
+     * Sets <code>field</code> in student table by <code>value</code>, for user with <code>userID</code>
+     * @param userID
+     * @param field The field to be set. Use <code>DBHelper.FIELD_*</code> values.
+     * @param value
+     * @throws SQLException
+     */
+    static void setStudentField(int userID, String field, Object value) throws SQLException {
+        if (isStringType(field)) {
+            _con.createStatement().execute("UPDATE student SET " + field + " = \"" + value + "\" WHERE UserID = " + userID);
+        } else {
+            _con.createStatement().execute("UPDATE student SET " + field + " = " + value + " WHERE UserID = " + userID);
+        }
     }
 
     static String getStudentState(int userID) throws SQLException {
