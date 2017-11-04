@@ -1,5 +1,7 @@
 package com.dblab;
 
+import com.dblab.state.StateNewUser;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,7 +31,13 @@ public class DBHelper {
         }
     }
 
-
+    /**
+     * @param userID
+     * @throws SQLException if student already exists (duplicate UserID)
+     */
+    static void createNewStudent(int userID) throws SQLException {
+        _con.createStatement().execute("INSERT INTO student (UserID, State) VALUES (" + userID + ", \"" + StateNewUser.VALUE + "\")");
+    }
 
     static void setStudentState(int userID, String state) throws SQLException {
         _con.createStatement().execute("INSERT INTO student (UserID, State) VALUES (" + userID + ", \"" + state + "\")" +
