@@ -5,34 +5,20 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
 
-
-    private static String BOT_TOKEN = "339428453:AAHM90686AbdTuE-77Qa8cNaxkJU0arR7Ws";
-
     static TelegramBot bot = null;
 
     public static void main(String[] args) {
 
-        bot = new TelegramBot(BOT_TOKEN);
+        bot = new TelegramBot(LocalConfigs.BOT_TOKEN);
 
         Connection connection = null;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/dblab_log", LocalConfigs.USERNAME, LocalConfigs.PASSWORD);
-        } catch (SQLException se) {
-            se.printStackTrace();
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        final Connection conn = connection;
+        DBHelper.init();
 
         bot.setUpdatesListener(new UpdatesListener() {
 //            @Override
