@@ -11,8 +11,8 @@ class StateHandler {
         String state = DBHelper.getStudentState(incomingMessage.from().id());
         if (state == null) {
             DBHelper.createNewStudent(incomingMessage.from().id());
-            StateNewUser.validate(incomingMessage);
             DBHelper.setStudentState(incomingMessage.from().id(), StateRegistrationGetFirstName.VALUE);
+            StateNewUser.validate(incomingMessage);
         } else {
             if (state.equals(StateMainScreen.VALUE)) {
                 DBHelper.setStudentState(incomingMessage.from().id(), StateFunctionList.VALUE);
