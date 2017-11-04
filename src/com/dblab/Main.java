@@ -4,21 +4,18 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
 
-    static TelegramBot bot = null;
+    public static TelegramBot bot = null;
 
     public static void main(String[] args) {
 
-        bot = new TelegramBot(LocalConfigs.BOT_TOKEN);
-
-        Connection connection = null;
-
         DBHelper.init();
+
+        bot = new TelegramBot(LocalConfigs.BOT_TOKEN);
 
         bot.setUpdatesListener(new UpdatesListener() {
 //            @Override
@@ -26,8 +23,9 @@ public class Main {
 
                 for (Update update : updates) {
                     try {
-                        conn.createStatement().execute("INSERT INTO log(text, user_id) VALUES(\"" + update.message().text() + "\", " + update.message().from().id() + ")");
-                        StateHandler.handleState(update.message(), conn);
+                        // old text logger
+//                        conn.createStatement().execute("INSERT INTO log(text, user_id) VALUES(\"" + update.message().text() + "\", " + update.message().from().id() + ")");
+                        StateHandler.handleMessage(update.message());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

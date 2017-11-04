@@ -1,34 +1,33 @@
 package com.dblab;
 
+import com.dblab.state.StateFunctionList;
+import com.dblab.state.StateMainScreen;
+import com.dblab.state.StateNewUser;
+import com.dblab.state.StateRegistrationGetName;
 import com.pengrad.telegrambot.model.Message;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class StateHandler {
+class StateHandler {
 
-    public static final String S_MAIN_SCREEN = "MAIN_SCREEN";
-    public static final String S_FUNCTION_LIST = "FUNCTION_LIST";
-    public static final String S_REGISTRATION_GET_NAME = "REGISTRATION_GET_NAME";
-
-    static void handleState(Message incomingMessage, final Connection connection) throws SQLException {
+    static void handleMessage(Message incomingMessage) throws SQLException {
 //        ResultSet result = connection.createStatement().executeQuery("SELECT state FROM user_state_tbl WHERE chat_id = " + incomingMessage.chat().id());
 
-        String state = Communicator.getUserState(incomingMessage.chat().id());
+        String state = DBHelper.getStudentState(incomingMessage.from().id());
         if (state == null) {
             StateNewUser.validate(incomingMessage);
-//            StateNewUser.setState(incomingMessage.chat().id(), S_MAIN_SCREEN, connection);
-            Communicator.setState(incomingMessage.chat().id(), S_REGISTRATION_GET_NAME);
+//            StateNewUser.setState(incomingMessage.chat().id(), StateMainScreen.VALUE, connection);
+            DBHelper.setStudentState(incomingMessage.from().id(), StateRegistrationGetName.VALUE);
         } else {
-            if (state.equals(S_MAIN_SCREEN)) {
-                changeState(incomingMessage.chat().id(), S_FUNCTION_LIST, connection);
+            if (state.equals(StateMainScreen.VALUE)) {
+                DBHelper.setStudentState(incomingMessage.from().id(), StateFunctionList.VALUE);
                 StateMainScreen.validate(incomingMessage);
             }
-            else if (state.equals(S_FUNCTION_LIST)) {
+            else if (state.equals(StateFunctionList.VALUE)) {
                 StateFunctionList.validate(incomingMessage);
             }
-            else if (state.equals(S_REGISTRATION_GET_NAME)) {
+            else if (state.equals(StateRegistrationGetName.VALUE)) {
 
             }
             else {
@@ -37,7 +36,7 @@ public class StateHandler {
         }
     }
 
-    static void changeState(long chatID, String newState, final Connection connection) throws SQLException {
-        connection.createStatement().execute("UPDATE user_state_tbl SET state = \"" + newState + "\" WHERE chat_id = " + chatID);
-    }
+//    static void changeState(long chatID, String newState, final Connection connection) throws SQLException {
+//        connection.createStatement().execute("UPDATE user_state_tbl SET state = \"" + newState + "\" WHERE chat_id = " + chatID);
+//    }
 }

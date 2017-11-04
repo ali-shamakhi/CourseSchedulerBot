@@ -29,6 +29,8 @@ public class DBHelper {
         }
     }
 
+
+
     static void setStudentState(int userID, String state) throws SQLException {
         _con.createStatement().execute("INSERT INTO student (UserID, State) VALUES (" + userID + ", \"" + state + "\")" +
                 "ON DUPLICATE KEY UPDATE State = \"" + state + "\"");
