@@ -11,7 +11,6 @@ public class DBHelper {
 
     private static Connection _con = null;
 
-
     static void init() {
         checkConnection();
     }
