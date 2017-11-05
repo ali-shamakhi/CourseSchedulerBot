@@ -36,13 +36,13 @@ public class DBHelper {
      * @throws SQLException if student already exists (duplicate UserID)
      */
     static void createNewStudent(int userID) throws SQLException {
-        _con.createStatement().execute("INSERT INTO student (UserID, State) VALUES (" + userID + ", \"" + StateNewUser.VALUE + "\")");
+        _con.createStatement().execute("INSERT INTO student (UserID, State, RegistrationDate) VALUES (" + userID + ", \"" + StateNewUser.VALUE + "\", NOW())");
     }
 
     public static final String FIELD_UserID = "UserID";
     public static final String FIELD_State = "State";
     public static final String FIELD_MajorID = "MajorID";
-    public static final String FIELD_Date = "Date";
+    public static final String FIELD_RegistrationDate = "RegistrationDate";
     public static final String FIELD_FirstName = "FirstName";
     public static final String FIELD_LastName = "LastName";
 
@@ -50,7 +50,7 @@ public class DBHelper {
         if (field.equals(FIELD_UserID)) return false;
         else if (field.equals(FIELD_State)) return true;
         else if (field.equals(FIELD_MajorID)) return false;
-        else if (field.equals(FIELD_Date)) return true;
+        else if (field.equals(FIELD_RegistrationDate)) return true;
         else if (field.equals(FIELD_FirstName)) return true;
         else if (field.equals(FIELD_LastName)) return true;
         else return false;
