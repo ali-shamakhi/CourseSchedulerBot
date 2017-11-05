@@ -32,6 +32,24 @@ CREATE TABLE `major` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `major_temp`
+--
+
+DROP TABLE IF EXISTS `major_temp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `major_temp` (
+  `MajorTempID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `MajorName` varchar(256) DEFAULT NULL,
+  `University` varchar(128) DEFAULT NULL,
+  `EntranceYear` int(11) DEFAULT NULL,
+  PRIMARY KEY (`MajorTempID`),
+  UNIQUE KEY `UserID_UNIQUE` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `student`
 --
 
