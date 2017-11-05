@@ -43,7 +43,7 @@ CREATE TABLE `student` (
   `UserID` int(10) unsigned DEFAULT NULL,
   `State` varchar(128) NOT NULL,
   `MajorID` int(11) DEFAULT NULL,
-  `Date` date DEFAULT NULL,
+  `RegistrationDate` date NOT NULL,
   `FirstName` varchar(128) DEFAULT NULL,
   `LastName` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`),
