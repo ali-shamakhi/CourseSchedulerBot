@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coursescheduler
 -- ------------------------------------------------------
--- Server version	5.7.19-log
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -43,7 +43,7 @@ CREATE TABLE `student` (
   `UserID` int(10) unsigned DEFAULT NULL,
   `State` varchar(128) NOT NULL,
   `MajorID` int(11) DEFAULT NULL,
-  `Date` date DEFAULT NULL,
+  `RegistrationDate` date NOT NULL,
   `FirstName` varchar(128) DEFAULT NULL,
   `LastName` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`),
