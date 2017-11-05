@@ -40,10 +40,13 @@ public class DBHelper {
 
     public static final String FIELD_UserID = "UserID";
     public static final String FIELD_State = "State";
-    public static final String FIELD_MajorID = "MajorID";
     public static final String FIELD_RegistrationDate = "RegistrationDate";
     public static final String FIELD_FirstName = "FirstName";
     public static final String FIELD_LastName = "LastName";
+
+    public static final String FIELD_MajorID = "MajorID";
+    public static final String FIELD_MajorName = "UserID";
+    public static final String FIELD_EntranceYear = "State";
 
     private static boolean isStringType(String field) {
         if (field.equals(FIELD_UserID)) return false;
@@ -52,6 +55,8 @@ public class DBHelper {
         else if (field.equals(FIELD_RegistrationDate)) return true;
         else if (field.equals(FIELD_FirstName)) return true;
         else if (field.equals(FIELD_LastName)) return true;
+        else if (field.equals(FIELD_MajorName)) return true;
+        else if (field.equals(FIELD_EntranceYear)) return false;
         else return false;
     }
 
@@ -71,6 +76,21 @@ public class DBHelper {
             _con.createStatement().execute("UPDATE student SET " + field + " = \"" + value + "\" WHERE UserID = " + userID);
         } else {
             _con.createStatement().execute("UPDATE student SET " + field + " = " + value + " WHERE UserID = " + userID);
+        }
+    }
+
+    /**
+     * Sets <code>field</code> in major table by <code>value</code>, for user with <code>majorID</code>
+     * @param majorID
+     * @param field The field to be set. Use <code>DBHelper.FIELD_*</code> values.
+     * @param value
+     * @throws SQLException
+     */
+    static void setMajorField(int majorID, String field, Object value) throws SQLException {
+        if (isStringType(field)) {
+            _con.createStatement().execute("UPDATE major SET " + field + " = \"" + value + "\" WHERE MajorID = " + majorID);
+        } else {
+            _con.createStatement().execute("UPDATE major SET " + field + " = " + value + " WHERE MajorID = " + majorID);
         }
     }
 
