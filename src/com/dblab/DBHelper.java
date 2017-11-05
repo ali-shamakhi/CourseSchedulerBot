@@ -55,7 +55,7 @@ public class DBHelper {
         else return false;
     }
 
-    static void setStudentState(int userID, String state) throws SQLException {
+    public static void setStudentState(int userID, String state) throws SQLException {
         setStudentField(userID, FIELD_State, state);
     }
 

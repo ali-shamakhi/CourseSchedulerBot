@@ -1,8 +1,11 @@
 package com.dblab.state;
 
 import com.dblab.Communicator;
+import com.dblab.DBHelper;
 import com.dblab.Main;
 import com.pengrad.telegrambot.model.Message;
+
+import java.sql.SQLException;
 
 /**
  * Created by sanei on 10/29/2017.
@@ -10,11 +13,8 @@ import com.pengrad.telegrambot.model.Message;
 public class StateRegistrationGetFirstName {
     public static final String VALUE = "REGISTRATION_GET_First_NAME";
 
-    public static void validate(Message message) {
-        if (message.text().equals("/registration")) {
-            Communicator.sendMessage(Main.bot, message.chat().id(), "OK, Let's Register!\nEnter your first name please:");
-        } else {
-            System.err.println("Unknown message!");
-        }
+    public static void validate(Message message) throws SQLException {
+        DBHelper.setStudentState(message.from().id(), StateRegistrationGetLastName.VALUE);
+        Communicator.sendMessage(Main.bot, message.chat().id(), "Hi " + message + "!\nNow enter your last name please:");
     }
 }

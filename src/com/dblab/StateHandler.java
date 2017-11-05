@@ -11,7 +11,6 @@ class StateHandler {
         String state = DBHelper.getStudentState(incomingMessage.from().id());
         if (state == null) {
             DBHelper.createNewStudent(incomingMessage.from().id());
-            DBHelper.setStudentState(incomingMessage.from().id(), StateRegistrationGetFirstName.VALUE);
             StateNewUser.validate(incomingMessage);
         } else {
             if (state.equals(StateMainScreen.VALUE)) {
@@ -47,7 +46,7 @@ class StateHandler {
             }
             else if (state.equals(StateRegistrationCompleted.VALUE)) {
 //                DBHelper.setMajorField(incomingMessage.from().id(),DBHelper.FIELD_EntranceYear, incomingMessage.text());
-                DBHelper.setStudentState(incomingMessage.from().id(), StateRegistrationCompleted.VALUE);
+                DBHelper.setStudentState(incomingMessage.from().id(), StateMainScreen.VALUE);
                 StateRegistrationCompleted.validate(incomingMessage);
             }
             else {

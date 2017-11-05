@@ -11,6 +11,6 @@ public class StateRegistrationCompleted {
     public static final String VALUE = "REGISTRATION_COMPLETED";
 
     public static void validate(Message message) {
-        Communicator.sendMessage(Main.bot, message.chat().id(), "The registration was successful!");
+        Communicator.sendMessage(Main.bot, message.chat().id(), "The registration was successful!\nPress /menu to see all functions.");
     }
 }
