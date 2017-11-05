@@ -34,11 +34,9 @@ class StateHandler {
                 StateRegistrationGetMajorName.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetUniversity.VALUE)) {
-//                DBHelper.setMajorField(incomingMessage.from().id(),DBHelper.FIELD_MajorName, incomingMessage.text());
                 StateRegistrationGetUniversity.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetEntranceYear.VALUE)) {
-//                DBHelper.setMajorField(incomingMessage.from().id(),DBHelper.FIELD_University, incomingMessage.text());
                 StateRegistrationGetEntranceYear.validate(incomingMessage);
             }
             else {
