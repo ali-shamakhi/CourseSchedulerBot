@@ -1,43 +1,22 @@
 package com.dblab.state;
 
+import com.dblab.Communicator;
+import com.dblab.DBHelper;
 import com.dblab.Main;
-import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.model.Message;
-import com.pengrad.telegrambot.model.request.ParseMode;
-import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.response.SendResponse;
 
-import java.io.IOException;
+import java.sql.SQLException;
 
 public class StateMainScreen {
     public static final String VALUE = "MAIN_SCREEN";
 
-    public static void validate(Message message) {
-
-        SendMessage request;
-
+    public static void validate(Message message) throws SQLException {
         if (message.text().equals("/menu")) {
-            request = new SendMessage(message.chat().id(), "1. Add course\n2. List courses\n3. Delete course")
-                    .parseMode(ParseMode.Markdown)
-                    .disableWebPagePreview(true)
-                    .disableNotification(true);
-        } else {
-            request = new SendMessage(message.chat().id(), "Press /menu to see available functions.")
-                    .parseMode(ParseMode.Markdown)
-                    .disableWebPagePreview(true)
-                    .disableNotification(true);
+            DBHelper.setStudentState(message.from().id(), StateFunctionList.VALUE);
+            Communicator.sendMessage(Main.bot, message.chat().id(), "1. /add_course\n2. /list_courses\n3. /delete_course\n4. /edit_profile");
         }
-
-        Main.bot.execute(request, new Callback<SendMessage, SendResponse>() {
-            public void onResponse(SendMessage sendMessage, SendResponse sendResponse) {
-                System.out.println(sendMessage.toString());
-                System.out.println(sendResponse.toString());
-            }
-
-            public void onFailure(SendMessage sendMessage, IOException e) {
-
-            }
-        });
-
+        else {
+            Communicator.sendMessage(Main.bot, message.chat().id(), "Press /menu to see available functions.");
+        }
     }
 }

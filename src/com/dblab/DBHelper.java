@@ -19,7 +19,7 @@ public class DBHelper {
         if (_con == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                _con = DriverManager.getConnection("jdbc:mysql://localhost/dblab_log", LocalConfigs.USERNAME, LocalConfigs.PASSWORD);
+                _con = DriverManager.getConnection(LocalConfigs.CONNECTION_STRING, LocalConfigs.USERNAME, LocalConfigs.PASSWORD);
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.exit(1);
@@ -60,7 +60,7 @@ public class DBHelper {
         else return false;
     }
 
-    static void setStudentState(int userID, String state) throws SQLException {
+    public static void setStudentState(int userID, String state) throws SQLException {
         setStudentField(userID, FIELD_State, state);
     }
 
@@ -71,7 +71,7 @@ public class DBHelper {
      * @param value
      * @throws SQLException
      */
-    static void setStudentField(int userID, String field, Object value) throws SQLException {
+    public static void setStudentField(int userID, String field, Object value) throws SQLException {
         if (isStringType(field)) {
             _con.createStatement().execute("UPDATE student SET " + field + " = \"" + value + "\" WHERE UserID = " + userID);
         } else {

@@ -13,7 +13,7 @@ public class Communicator {
 
     public static void sendMessage(TelegramBot bot, long chatID, String text) {
         SendMessage sm = new SendMessage(chatID, text)
-                .parseMode(ParseMode.Markdown)
+//                .parseMode(ParseMode.Markdown)
                 ;
         bot.execute(sm, new Callback<SendMessage, SendResponse>() {
             public void onResponse(SendMessage sendMessage, SendResponse sendResponse) {
