@@ -16,6 +16,6 @@ public class StateRegistrationGetFirstName {
     public static void validate(Message message) throws SQLException {
         DBHelper.setStudentField(message.from().id(),DBHelper. FIELD_FirstName, message.text());
         DBHelper.setStudentState(message.from().id(), StateRegistrationGetLastName.VALUE);
-        Communicator.sendMessage(Main.bot, message.chat().id(), "Hi " + message + "!\nNow enter your last name please:");
+        Communicator.sendMessage(Main.bot, message.chat().id(), "Hi " + message.text() + "!\nNow enter your last name please:");
     }
 }

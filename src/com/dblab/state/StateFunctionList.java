@@ -11,16 +11,16 @@ public class StateFunctionList {
     public static final String VALUE = "FUNCTION_LIST";
 
     public static void validate(Message message) throws SQLException {
-        if (message.text().equals("/Add_course")) {
+        if (message.text().equals("/addcourse")) {
             Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
         }
-        else if (message.text().equals("/List_courses")) {
+        else if (message.text().equals("/listcourses")) {
             Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
         }
-        else if (message.text().equals("/Delete_course")) {
+        else if (message.text().equals("/deletecourse")) {
             Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
         }
-        else if (message.text().equals("/Edit_profile")) {
+        else if (message.text().equals("/editprofile")) {
             DBHelper.setStudentState(message.from().id(), StateNotRegistered.VALUE);
             Communicator.sendMessage(Main.bot, message.chat().id(), "/edit");
         }

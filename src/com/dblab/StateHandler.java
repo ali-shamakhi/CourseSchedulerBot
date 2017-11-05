@@ -26,11 +26,9 @@ class StateHandler {
                 StateRegistrationGetFirstName.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetLastName.VALUE)) {
-                DBHelper.setStudentField(incomingMessage.from().id(),DBHelper.FIELD_FirstName, incomingMessage.text());
                 StateRegistrationGetLastName.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetMajorName.VALUE)) {
-                DBHelper.setStudentField(incomingMessage.from().id(),DBHelper.FIELD_LastName, incomingMessage.text());
                 StateRegistrationGetMajorName.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetUniversity.VALUE)) {

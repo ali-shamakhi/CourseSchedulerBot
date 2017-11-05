@@ -19,7 +19,7 @@ public class DBHelper {
         if (_con == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                _con = DriverManager.getConnection("jdbc:mysql://localhost/dblab_log", LocalConfigs.USERNAME, LocalConfigs.PASSWORD);
+                _con = DriverManager.getConnection(LocalConfigs.CONNECTION_STRING, LocalConfigs.USERNAME, LocalConfigs.PASSWORD);
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.exit(1);

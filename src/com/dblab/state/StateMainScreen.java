@@ -13,7 +13,7 @@ public class StateMainScreen {
     public static void validate(Message message) throws SQLException {
         if (message.text().equals("/menu")) {
             DBHelper.setStudentState(message.from().id(), StateFunctionList.VALUE);
-            Communicator.sendMessage(Main.bot, message.chat().id(), "1. /Add_course\n2. /List_courses\n3. /Delete_course\n4. /Edit_profile");
+            Communicator.sendMessage(Main.bot, message.chat().id(), "1. /addcourse\n2. /listcourses\n3. /deletecourse\n4. /editprofile");
         }
         else {
             Communicator.sendMessage(Main.bot, message.chat().id(), "Press /menu to see available functions.");
