@@ -14,6 +14,7 @@ public class StateRegistrationGetMajorName {
     public static final String VALUE = "REGISTRATION_GET_MAJOR_NAME";
 
     public static void validate(Message message) throws SQLException {
+//        DBHelper.setMajorField(message.from().id(),DBHelper.FIELD_MajorName, message.text());
         DBHelper.setStudentState(message.from().id(), StateRegistrationGetUniversity.VALUE);
         Communicator.sendMessage(Main.bot, message.chat().id(), "What is the name of your university?");
     }

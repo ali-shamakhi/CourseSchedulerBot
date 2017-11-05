@@ -66,7 +66,7 @@ public class DBHelper {
      * @param value
      * @throws SQLException
      */
-    static void setStudentField(int userID, String field, Object value) throws SQLException {
+    public static void setStudentField(int userID, String field, Object value) throws SQLException {
         if (isStringType(field)) {
             _con.createStatement().execute("UPDATE student SET " + field + " = \"" + value + "\" WHERE UserID = " + userID);
         } else {

@@ -11,7 +11,7 @@ public class StateNotRegistered {
     public static final String VALUE = "NOT_REGISTERED";
 
     public static void validate(Message message) throws SQLException {
-        if (message.text().equals("/registration")) {
+        if (message.text().equals("/registration") || message.text().equals("/edit")) {
             DBHelper.setStudentState(message.from().id(), StateRegistrationGetFirstName.VALUE);
             Communicator.sendMessage(Main.bot, message.chat().id(), "Enter your first name please:");
         } else {
