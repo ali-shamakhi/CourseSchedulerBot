@@ -45,19 +45,21 @@ public class DBHelper {
     public static final String FIELD_LastName = "LastName";
 
     public static final String FIELD_MajorID = "MajorID";
-    public static final String FIELD_MajorName = "UserID";
-    public static final String FIELD_EntranceYear = "State";
+    public static final String FIELD_MajorName = "MajorName";
+    public static final String FIELD_University = "University";
+    public static final String FIELD_EntranceYear = "EntranceYear";
 
     private static boolean isStringType(String field) {
         if (field.equals(FIELD_UserID)) return false;
         else if (field.equals(FIELD_State)) return true;
-        else if (field.equals(FIELD_MajorID)) return false;
         else if (field.equals(FIELD_RegistrationDate)) return true;
         else if (field.equals(FIELD_FirstName)) return true;
         else if (field.equals(FIELD_LastName)) return true;
+        else if (field.equals(FIELD_MajorID)) return false;
         else if (field.equals(FIELD_MajorName)) return true;
+        else if (field.equals(FIELD_University)) return true;
         else if (field.equals(FIELD_EntranceYear)) return false;
-        else return false;
+        else throw new RuntimeException("isStringType(field): Unknown field " + field);
     }
 
     public static void setStudentState(int userID, String state) throws SQLException {
