@@ -2,7 +2,6 @@ package com.dblab;
 
 import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 
@@ -10,6 +9,21 @@ import java.io.IOException;
 import java.util.IllegalFormatException;
 
 public class Communicator {
+
+    public static void showProfile(TelegramBot bot, long chatID, int userID) {
+        String firstName = null,
+               lastName = null,
+               majorName = null,
+               university = null;
+        int entranceYear = 0;
+//        firstName = DBHelper.getStudentField(userID, DBHelper.FIELD_FirstName);
+//        lastName = DBHelper.getStudentField(userID, DBHelper.FIELD_LastName);
+//        majorName = DBHelper.getMajorField(userID, DBHelper.FIELD_MajorName);
+//        university = DBHelper.getMajorField(userID, DBHelper.FIELD_University);
+//        entranceYear = DBHelper.getMajorField(userID, DBHelper.FIELD_EntranceYear);
+        String profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: " + entranceYear;
+        sendMessage(bot, chatID, profile);
+    }
 
     public static void sendMessage(TelegramBot bot, long chatID, String text) {
         SendMessage sm = new SendMessage(chatID, text)

@@ -45,7 +45,7 @@ public class DBHelper {
     public static final String FIELD_LastName = "LastName";
 
     public static final String FIELD_MajorID = "MajorID";
-    public static final String FIELD_MajorName = "UserID";
+    public static final String FIELD_MajorName = "MajorName";
     public static final String FIELD_EntranceYear = "State";
 
     private static boolean isStringType(String field) {
