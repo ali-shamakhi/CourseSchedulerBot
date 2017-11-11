@@ -74,8 +74,12 @@ fabric.properties
 hs_err_pid*
 
 
-### Custom
+### Custom JetBrains Structure
 .idea/vsc.xml
 .idea/project-template.xml
 .idea/misc.xml
 .idea/inspectionProfiles/profiles_settings.xml
+
+### Local Files/Configs
+src/com/dblab/LocalConfigs.java
+db-constants.sh
