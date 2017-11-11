@@ -12,7 +12,7 @@ public class StateFunctionList {
 
     public static void validate(Message message) throws SQLException {
         if (message.text().equals("/show_profile")) {
-            Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
+            Communicator.showProfile(Main.bot, message.chat().id(), message.from().id());
         }
         else if (message.text().equals("/edit_profile")) {
             DBHelper.setStudentState(message.from().id(), StateRegistrationGetFirstName.VALUE);
