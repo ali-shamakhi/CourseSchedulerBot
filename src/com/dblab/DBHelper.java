@@ -40,10 +40,10 @@ public class DBHelper {
 
     public static final String FIELD_UserID = "UserID";
     public static final String FIELD_State = "State";
+    public static final String FIELD_Substate = "Substate";
     public static final String FIELD_RegistrationDate = "RegistrationDate";
     public static final String FIELD_FirstName = "FirstName";
     public static final String FIELD_LastName = "LastName";
-//    public static final String FIELD_Substate = "Substate"; Please Add it to table student.
 
     public static final String FIELD_MajorID = "MajorID";
     public static final String FIELD_MajorName = "MajorName";
@@ -53,6 +53,7 @@ public class DBHelper {
     private static boolean isStringType(String field) {
         if (field.equals(FIELD_UserID)) return false;
         else if (field.equals(FIELD_State)) return true;
+        else if (field.equals(FIELD_Substate)) return true;
         else if (field.equals(FIELD_RegistrationDate)) return true;
         else if (field.equals(FIELD_FirstName)) return true;
         else if (field.equals(FIELD_LastName)) return true;
@@ -67,6 +68,10 @@ public class DBHelper {
         setStudentField(userID, FIELD_State, state);
     }
 
+    public static void setStudentSubstate(int userID, String substate) throws SQLException {
+        setStudentField(userID, FIELD_Substate, substate);
+    }
+
     /**
      * Sets <code>field</code> in student table by <code>value</code>, for user with <code>userID</code>
      * @param userID
@@ -75,11 +80,29 @@ public class DBHelper {
      * @throws SQLException
      */
     public static void setStudentField(int userID, String field, Object value) throws SQLException {
+        if (value == null) {
+            _con.createStatement().execute("UPDATE student SET " + field + " = NULL WHERE UserID = " + userID);
+        }
         if (isStringType(field)) {
             _con.createStatement().execute("UPDATE student SET " + field + " = \"" + value + "\" WHERE UserID = " + userID);
         } else {
             _con.createStatement().execute("UPDATE student SET " + field + " = " + value + " WHERE UserID = " + userID);
         }
+    }
+
+    public static Object getStudentField(int userID, String field) throws SQLException {
+        ResultSet rs = _con.createStatement().executeQuery("SELECT " + field + " FROM student WHERE UserID = " + userID);
+        Object result = null;
+        while (rs.next()) {
+            if (isStringType(field)) {
+                result = rs.getString(field);
+            }
+            else {
+                result = rs.getInt(field);
+            }
+            break;
+        }
+        return result;
     }
 
     /**
@@ -97,6 +120,21 @@ public class DBHelper {
         }
     }
 
+    public static Object getMajorField(int majorID, String field) throws SQLException {
+        ResultSet rs = _con.createStatement().executeQuery("SELECT " + field + " FROM major WHERE MajorID = " + majorID);
+        Object result = null;
+        while (rs.next()) {
+            if (isStringType(field)) {
+                result = rs.getString(field);
+            }
+            else {
+                result = rs.getInt(field);
+            }
+            break;
+        }
+        return result;
+    }
+
     static String getStudentState(int userID) throws SQLException {
         ResultSet result = _con.createStatement().executeQuery("SELECT State FROM student WHERE UserID = " + userID);
         String state = null;
@@ -106,7 +144,4 @@ public class DBHelper {
         }
         return state;
     }
-
-    // Implement getStudentField(userID, field)
-    // Implement getMajorField(userID, field)
 }
