@@ -76,7 +76,7 @@ BEGIN
     ELSE
       INSERT INTO major (MajorName, University, EntranceYear) VALUES (mjname, uni, entyear);
       SELECT LAST_INSERT_ID(1) AS mjid;
-      UPDATE student SET MajorID = mjid;
+      UPDATE student SET MajorID = mjid WHERE UserID = uid;
     END IF;
   END ;;
 DELIMITER ;
