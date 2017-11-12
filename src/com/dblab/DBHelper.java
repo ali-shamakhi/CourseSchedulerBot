@@ -1,6 +1,7 @@
 package com.dblab;
 
 import com.dblab.model.MajorModel;
+import com.dblab.model.ProfileModel;
 import com.dblab.state.StateNewUser;
 
 import java.sql.Connection;
@@ -149,5 +150,26 @@ public class DBHelper {
     static void setStudentMajorByFields(int userID, MajorModel majorModel) throws SQLException {
         _con.createStatement().execute("CALL SET_STUDENT_MAJOR_BY_FIELDS ("
                 + userID + ", \"" + majorModel.majorName + "\", \"" + majorModel.university + "\", " + majorModel.entranceYear + ")");
+    }
+
+    static ProfileModel getStudentProfile(int userID) throws SQLException {
+        ResultSet result = _con.createStatement().executeQuery("SELECT "
+                + FIELD_FirstName + ", "
+                + FIELD_LastName + ", "
+                + FIELD_MajorName + ", "
+                + FIELD_University + ", "
+                + FIELD_EntranceYear
+                + " FROM (student LEFT JOIN major ON student.MajorID = major.MajorID) WHERE UserID = " + userID);
+        ProfileModel profile = null;
+        while (result.next()) {
+            profile = new ProfileModel();
+            profile.firstName = result.getString(FIELD_FirstName);
+            profile.lastName = result.getString(FIELD_LastName);
+            profile.majorName = result.getString(FIELD_MajorName);
+            profile.university = result.getString(FIELD_University);
+            profile.entranceYear = result.getInt(FIELD_EntranceYear);
+            break;
+        }
+        return profile;
     }
 }
