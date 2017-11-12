@@ -1,11 +1,19 @@
 package com.dblab;
 
+import com.dblab.model.MajorModel;
+import com.dblab.model.UserMap;
 import com.dblab.state.*;
 import com.pengrad.telegrambot.model.Message;
 
 import java.sql.SQLException;
 
 class StateHandler {
+
+    static UserMap<MajorModel> userMajorMap;
+
+    static {
+        userMajorMap = new UserMap<MajorModel>();
+    }
 
     static void handleMessage(Message incomingMessage) throws SQLException {
         String state = DBHelper.getStudentState(incomingMessage.from().id());
