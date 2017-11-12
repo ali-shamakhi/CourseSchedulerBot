@@ -1,5 +1,6 @@
 package com.dblab;
 
+import com.dblab.model.MajorModel;
 import com.dblab.state.StateNewUser;
 
 import java.sql.Connection;
@@ -143,5 +144,10 @@ public class DBHelper {
             break;
         }
         return state;
+    }
+
+    static void setStudentMajorByFields(int userID, MajorModel majorModel) throws SQLException {
+        _con.createStatement().execute("CALL SET_STUDENT_MAJOR_BY_FIELDS ("
+                + userID + ", \"" + majorModel.name + "\", \"" + majorModel.university + "\", " + majorModel.entranceYear + ")");
     }
 }
