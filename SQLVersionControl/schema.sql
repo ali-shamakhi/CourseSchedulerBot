@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coursescheduler
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.19-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,6 +28,24 @@ CREATE TABLE `major` (
   `University` varchar(128) DEFAULT NULL,
   `EnteranceYear` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`MajorID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `major_temp`
+--
+
+DROP TABLE IF EXISTS `major_temp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `major_temp` (
+  `MajorTempID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `MajorName` varchar(256) DEFAULT NULL,
+  `University` varchar(128) DEFAULT NULL,
+  `EntranceYear` int(11) DEFAULT NULL,
+  PRIMARY KEY (`MajorTempID`),
+  UNIQUE KEY `UserID_UNIQUE` (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
