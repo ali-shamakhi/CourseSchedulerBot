@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `major`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `major` (
   `MajorID` int(11) NOT NULL AUTO_INCREMENT,
-  `MajorName` varchar(256) DEFAULT NULL,
-  `University` varchar(128) DEFAULT NULL,
-  `EnteranceYear` int(11) unsigned DEFAULT NULL,
+  `MajorName` varchar(256) NOT NULL,
+  `University` varchar(128) NOT NULL,
+  `EntranceYear` int(11) unsigned NOT NULL,
   PRIMARY KEY (`MajorID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
