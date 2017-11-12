@@ -15,8 +15,8 @@ public class StateRegistrationGetMajorName {
 
     public static void validate(Message message) throws SQLException {
 
-        // Will change to DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetUniversity.VALUE);
-        DBHelper.setStudentState(message.from().id(), StateRegistrationGetUniversity.VALUE);
+        DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetUniversity.VALUE);
+        //- DBHelper.setStudentState(message.from().id(), StateRegistrationGetUniversity.VALUE);
         Communicator.sendMessage(Main.bot, message.chat().id(), "What is the name of your university?");
     }
 }
