@@ -26,6 +26,8 @@ public class Main {
                         StateHandler.handleMessage(update.message());
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } catch (Exception ee) {
+                        ee.printStackTrace();
                     }
                 }
 
