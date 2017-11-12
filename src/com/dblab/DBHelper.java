@@ -3,11 +3,13 @@ package com.dblab;
 import com.dblab.model.MajorModel;
 import com.dblab.model.ProfileModel;
 import com.dblab.state.StateNewUser;
+import com.dblab.util.DBFieldUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class DBHelper {
 
@@ -64,6 +66,32 @@ public class DBHelper {
         else if (field.equals(FIELD_University)) return true;
         else if (field.equals(FIELD_EntranceYear)) return false;
         else throw new RuntimeException("isStringType(field): Unknown field " + field);
+    }
+
+    /**
+     * gets specified <code>fields</code> from given <code>table</code>
+     * @param table table name
+     * @param primaryField the name of the table's primary field
+     * @param id value of the primary field
+     * @param fields an array of selecting fields
+     * @return a map of field names to values
+     * @throws SQLException
+     */
+    public static HashMap<String, Object> getTableFields(String table, String primaryField, Object id, String ... fields) throws SQLException {
+        ResultSet rs = _con.createStatement().executeQuery("SELECT " + DBFieldUtil.join("", ", ", "", fields) + " FROM " + table + " WHERE " + primaryField + " = " + id);
+        HashMap<String, Object> fieldValues = null;
+        while (rs.next()) {
+            fieldValues = new HashMap<String, Object>();
+            for (String field : fields) {
+                if (isStringType(field)) {
+                    fieldValues.put(field, rs.getString(field));
+                } else {
+                    fieldValues.put(field, rs.getInt(field));
+                }
+            }
+            break;
+        }
+        return fieldValues;
     }
 
     public static void setStudentState(int userID, String state) throws SQLException {
