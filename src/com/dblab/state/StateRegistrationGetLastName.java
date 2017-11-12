@@ -15,6 +15,8 @@ public class StateRegistrationGetLastName {
 
     public static void validate(Message message) throws SQLException {
         DBHelper.setStudentField(message.from().id(), DBHelper.FIELD_LastName, message.text());
+        // Will change to DBHelper.setStudentState(message.from().id(), StateRegistrationGetMajor.VALUE);
+        // And DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetMajorName.VALUE);
         DBHelper.setStudentState(message.from().id(), StateRegistrationGetMajorName.VALUE);
         Communicator.sendMessage(Main.bot, message.chat().id(), "What is your major?");
     }
