@@ -36,6 +36,10 @@ class StateHandler {
             else if (state.equals(StateRegistrationGetLastName.VALUE)) {
                 StateRegistrationGetLastName.validate(incomingMessage);
             }
+            else if (state.equals(StateRegistrationGetMajor.VALUE)) {
+                StateRegistrationGetMajor.validate(incomingMessage); // check substate
+            }
+            /*
             else if (state.equals(StateRegistrationGetMajorName.VALUE)) {
                 StateRegistrationGetMajorName.validate(incomingMessage);
             }
@@ -45,6 +49,7 @@ class StateHandler {
             else if (state.equals(StateRegistrationGetEntranceYear.VALUE)) {
                 StateRegistrationGetEntranceYear.validate(incomingMessage);
             }
+            */
             else {
                 System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.chat().id());
             }

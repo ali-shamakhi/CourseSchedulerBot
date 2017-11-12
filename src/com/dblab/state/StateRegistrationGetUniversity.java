@@ -15,8 +15,8 @@ public class StateRegistrationGetUniversity {
 
     public static void validate(Message message) throws SQLException {
 
-        // Will change to DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetEntranceYear.VALUE);
-        DBHelper.setStudentState(message.from().id(), StateRegistrationGetEntranceYear.VALUE);
+        DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetEntranceYear.VALUE);
+        //- DBHelper.setStudentState(message.from().id(), StateRegistrationGetEntranceYear.VALUE);
         Communicator.sendMessage(Main.bot, message.chat().id(), "What is your entrance year?\nEntrance year should be between 1301 to 1396");
     }
 }

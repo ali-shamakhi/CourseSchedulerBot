@@ -16,7 +16,8 @@ public class StateRegistrationGetEntranceYear {
     public static void validate(Message message) throws SQLException {
         if (1301 < Integer.parseInt(message.text()) && Integer.parseInt(message.text()) < 1397) {
 
-            // DBHelper.setStudentSubstate(message.from().id(), NULL);
+            // Check it:
+            DBHelper.setStudentSubstate(message.from().id(), "");
             DBHelper.setStudentState(message.from().id(), StateMainScreen.VALUE);
             Communicator.sendMessage(Main.bot, message.chat().id(), "The registration was successful!\nPress /menu to see all functions.");
         }
