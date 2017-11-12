@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coursescheduler
 -- ------------------------------------------------------
--- Server version	5.7.19-log
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,24 +32,6 @@ CREATE TABLE `major` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `major_temp`
---
-
-DROP TABLE IF EXISTS `major_temp`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `major_temp` (
-  `MajorTempID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) NOT NULL,
-  `MajorName` varchar(256) DEFAULT NULL,
-  `University` varchar(128) DEFAULT NULL,
-  `EntranceYear` int(11) DEFAULT NULL,
-  PRIMARY KEY (`MajorTempID`),
-  UNIQUE KEY `UserID_UNIQUE` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `student`
 --
 
@@ -69,7 +51,7 @@ CREATE TABLE `student` (
   UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   KEY `FK_student_major_MajorID_idx` (`MajorID`),
   CONSTRAINT `FK_student_major_MajorID` FOREIGN KEY (`MajorID`) REFERENCES `major` (`MajorID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

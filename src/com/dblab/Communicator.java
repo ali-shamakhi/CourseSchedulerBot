@@ -12,17 +12,22 @@ import java.util.IllegalFormatException;
 public class Communicator {
 
     public static void showProfile(TelegramBot bot, long chatID, int userID) throws SQLException {
-        String firstName = null,
-               lastName = null,
-               majorName = null,
-               university = null;
-        int entranceYear = 0;
+        String firstName, lastName, majorName, university;
+        int entranceYear;
+        String profile;
+
         firstName = (String) DBHelper.getStudentField(userID, DBHelper.FIELD_FirstName);
         lastName = (String) DBHelper.getStudentField(userID, DBHelper.FIELD_LastName);
         majorName = (String) DBHelper.getMajorField(userID, DBHelper.FIELD_MajorName);
         university = (String) DBHelper.getMajorField(userID, DBHelper.FIELD_University);
-        entranceYear = (Integer) DBHelper.getMajorField(userID, DBHelper.FIELD_EntranceYear);
-        String profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: " + entranceYear;
+        if (DBHelper.getMajorField(userID, DBHelper.FIELD_EntranceYear) != null) {
+            entranceYear = (Integer) DBHelper.getMajorField(userID, DBHelper.FIELD_EntranceYear);
+            profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: " + entranceYear;
+        }
+        else {
+            profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: null";
+        }
+
         sendMessage(bot, chatID, profile);
     }
 
