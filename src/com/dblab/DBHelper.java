@@ -43,6 +43,7 @@ public class DBHelper {
     public static final String FIELD_RegistrationDate = "RegistrationDate";
     public static final String FIELD_FirstName = "FirstName";
     public static final String FIELD_LastName = "LastName";
+//    public static final String FIELD_Substate = "Substate"; Please Add it to table student.
 
     public static final String FIELD_MajorID = "MajorID";
     public static final String FIELD_MajorName = "MajorName";
@@ -105,4 +106,7 @@ public class DBHelper {
         }
         return state;
     }
+
+    // Implement getStudentField(userID, field)
+    // Implement getMajorField(userID, field)
 }
