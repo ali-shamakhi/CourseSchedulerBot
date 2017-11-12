@@ -147,7 +147,7 @@ public class DBHelper {
         return state;
     }
 
-    static String getStudentSubstate(int userID) throws SQLException {
+    public static String getStudentSubstate(int userID) throws SQLException {
         ResultSet result = _con.createStatement().executeQuery("SELECT Substate FROM student WHERE UserID = " + userID);
         String substate = null;
         while (result.next()) {
@@ -157,7 +157,7 @@ public class DBHelper {
         return substate;
     }
 
-    static void setStudentMajorByFields(int userID, MajorModel majorModel) throws SQLException {
+    public static void setStudentMajorByFields(int userID, MajorModel majorModel) throws SQLException {
         _con.createStatement().execute("CALL SET_STUDENT_MAJOR_BY_FIELDS ("
                 + userID + ", \"" + majorModel.majorName + "\", \"" + majorModel.university + "\", " + majorModel.entranceYear + ")");
     }

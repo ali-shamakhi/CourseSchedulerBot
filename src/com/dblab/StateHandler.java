@@ -37,7 +37,7 @@ class StateHandler {
                 StateRegistrationGetLastName.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetMajor.VALUE)) {
-                StateRegistrationGetMajor.validate(incomingMessage); // check substate
+                StateRegistrationGetMajor.validate(incomingMessage, userMajorMap); // check substate
             }
             /*
             else if (state.equals(StateRegistrationGetMajorName.VALUE)) {
