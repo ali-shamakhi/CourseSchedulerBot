@@ -148,6 +148,6 @@ public class DBHelper {
 
     static void setStudentMajorByFields(int userID, MajorModel majorModel) throws SQLException {
         _con.createStatement().execute("CALL SET_STUDENT_MAJOR_BY_FIELDS ("
-                + userID + ", \"" + majorModel.name + "\", \"" + majorModel.university + "\", " + majorModel.entranceYear + ")");
+                + userID + ", \"" + majorModel.majorName + "\", \"" + majorModel.university + "\", " + majorModel.entranceYear + ")");
     }
 }
