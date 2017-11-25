@@ -112,6 +112,7 @@ public class DBHelper {
     public static void setStudentField(int userID, String field, Object value) throws SQLException {
         if (value == null) {
             _con.createStatement().execute("UPDATE student SET " + field + " = NULL WHERE UserID = " + userID);
+            return;
         }
         if (isStringType(field)) {
             _con.createStatement().execute("UPDATE student SET " + field + " = \"" + value + "\" WHERE UserID = " + userID);
@@ -148,6 +149,21 @@ public class DBHelper {
         } else {
             _con.createStatement().execute("UPDATE major SET " + field + " = " + value + " WHERE MajorID = " + majorID);
         }
+    }
+
+    public static Object getMajorFieldForUser(int userID, String field) throws SQLException {
+        ResultSet rs = _con.createStatement().executeQuery("SELECT " + field + " FROM major WHERE MajorID = (SELECT MajorID FROM student WHERE UserID = " + userID + " LIMIT 1)");
+        Object result = null;
+        while (rs.next()) {
+            if (isStringType(field)) {
+                result = rs.getString(field);
+            }
+            else {
+                result = rs.getInt(field);
+            }
+            break;
+        }
+        return result;
     }
 
     public static Object getMajorField(int majorID, String field) throws SQLException {

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coursescheduler
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.19-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `major` (
   `University` varchar(128) NOT NULL,
   `EntranceYear` int(11) unsigned NOT NULL,
   PRIMARY KEY (`MajorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +51,7 @@ CREATE TABLE `student` (
   UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   KEY `FK_student_major_MajorID_idx` (`MajorID`),
   CONSTRAINT `FK_student_major_MajorID` FOREIGN KEY (`MajorID`) REFERENCES `major` (`MajorID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,14 +69,14 @@ CREATE TABLE `student` (
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SET_STUDENT_MAJOR_BY_FIELDS`(IN uid int(10), IN mjname varchar(256), IN uni varchar(128), IN entyear int(11))
 BEGIN
-    SELECT MajorID, MajorName, University, EntranceYear AS mjRow FROM major WHERE MajorName = mjname AND University = uni AND EntranceYear = entyear;
-    SELECT COUNT(*) FROM mjRow AS c;
-    IF (c >= 1) THEN
-      UPDATE student SET MajorID = (SELECT MajorID FROM mjRow LIMIT 1) WHERE UserID = uid;
+    SELECT MajorID, MajorName, University, EntranceYear INTO @mjid, @mjnm, @mjun, @mjey FROM major WHERE MajorName = mjname AND University = uni AND EntranceYear = entyear;
+    SELECT COUNT(MajorID) INTO @c FROM (SELECT MajorID FROM major WHERE MajorName = mjname AND University = uni AND EntranceYear = entyear) AS mjRow;
+    IF (@c >= 1) THEN
+      UPDATE student SET MajorID = @mjid WHERE UserID = uid;
     ELSE
       INSERT INTO major (MajorName, University, EntranceYear) VALUES (mjname, uni, entyear);
-      SELECT LAST_INSERT_ID(1) AS mjid;
-      UPDATE student SET MajorID = mjid WHERE UserID = uid;
+      SELECT LAST_INSERT_ID() INTO @mjidn;
+      UPDATE student SET MajorID = @mjidn WHERE UserID = uid;
     END IF;
   END ;;
 DELIMITER ;
