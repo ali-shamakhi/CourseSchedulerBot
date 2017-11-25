@@ -23,11 +23,14 @@ public class Main {
 
                 for (Update update : updates) {
                     try {
+                        System.out.println(update.message().toString());
                         StateHandler.handleMessage(update.message());
                     } catch (SQLException e) {
                         e.printStackTrace();
+                        Communicator.sendMessage(bot, update.message().chat().id(), "FATAL ERROR : SQL Exception\nPlease contact bot admin.");
                     } catch (Exception ee) {
                         ee.printStackTrace();
+                        Communicator.sendMessage(bot, update.message().chat().id(), "FATAL ERROR : " + ee.getMessage() + "\nPlease contact bot admin.");
                     }
                 }
 
