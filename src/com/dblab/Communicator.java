@@ -18,10 +18,10 @@ public class Communicator {
 
         firstName = (String) DBHelper.getStudentField(userID, DBHelper.FIELD_FirstName);
         lastName = (String) DBHelper.getStudentField(userID, DBHelper.FIELD_LastName);
-        majorName = (String) DBHelper.getMajorField(userID, DBHelper.FIELD_MajorName);
-        university = (String) DBHelper.getMajorField(userID, DBHelper.FIELD_University);
-        if (DBHelper.getMajorField(userID, DBHelper.FIELD_EntranceYear) != null) {
-            entranceYear = (Integer) DBHelper.getMajorField(userID, DBHelper.FIELD_EntranceYear);
+        majorName = (String) DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_MajorName);
+        university = (String) DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_University);
+        if (DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_EntranceYear) != null) {
+            entranceYear = (Integer) DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_EntranceYear);
             profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: " + entranceYear;
         }
         else {

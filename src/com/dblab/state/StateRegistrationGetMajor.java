@@ -14,7 +14,17 @@ public class StateRegistrationGetMajor {
     public static final String VALUE = "REGISTRATION_GET_MAJOR";
 
     public static void validate(Message message, UserMap<MajorModel> userMajorMap) throws SQLException {
-        String substate = DBHelper.getStudentSubstate(message.from().id());
+        String substate;
+        if (!userMajorMap.containsKey(message.from().id())) {
+            DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetMajorName.VALUE);
+            substate = StateRegistrationGetMajorName.VALUE;
+        } else {
+            substate = DBHelper.getStudentSubstate(message.from().id());
+            if (substate == null) {
+                DBHelper.setStudentSubstate(message.from().id(), StateRegistrationGetMajorName.VALUE);
+                substate = StateRegistrationGetMajorName.VALUE;
+            }
+        }
         if (substate.equals(StateRegistrationGetMajorName.VALUE)) {
             StateRegistrationGetMajorName.validate(message, userMajorMap);
         }
