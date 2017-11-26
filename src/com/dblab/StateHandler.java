@@ -37,19 +37,8 @@ class StateHandler {
                 StateRegistrationGetLastName.validate(incomingMessage);
             }
             else if (state.equals(StateRegistrationGetMajor.VALUE)) {
-                StateRegistrationGetMajor.validate(incomingMessage, userMajorMap); // check substate
+                StateRegistrationGetMajor.validate(incomingMessage, userMajorMap);
             }
-            /*
-            else if (state.equals(StateRegistrationGetMajorName.VALUE)) {
-                StateRegistrationGetMajorName.validate(incomingMessage);
-            }
-            else if (state.equals(StateRegistrationGetUniversity.VALUE)) {
-                StateRegistrationGetUniversity.validate(incomingMessage);
-            }
-            else if (state.equals(StateRegistrationGetEntranceYear.VALUE)) {
-                StateRegistrationGetEntranceYear.validate(incomingMessage);
-            }
-            */
             else {
                 System.err.println("Unknown state " + state + " for chat_id " + incomingMessage.chat().id());
             }

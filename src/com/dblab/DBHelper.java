@@ -185,7 +185,7 @@ public class DBHelper {
         ResultSet result = _con.createStatement().executeQuery("SELECT State FROM student WHERE UserID = " + userID);
         String state = null;
         while (result.next()) {
-            state = result.getString("State");
+            state = result.getString(FIELD_State);
             break;
         }
         return state;
@@ -195,7 +195,7 @@ public class DBHelper {
         ResultSet result = _con.createStatement().executeQuery("SELECT Substate FROM student WHERE UserID = " + userID);
         String substate = null;
         while (result.next()) {
-            substate = result.getString("Substate");
+            substate = result.getString(FIELD_Substate);
             break;
         }
         return substate;
