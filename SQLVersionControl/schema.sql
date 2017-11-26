@@ -44,7 +44,7 @@ CREATE TABLE `student` (
   `State` varchar(128) NOT NULL,
   `Substate` varchar(128) DEFAULT NULL,
   `MajorID` int(11) DEFAULT NULL,
-  `RegistrationDate` date NOT NULL,
+  `RegistrationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `FirstName` varchar(128) DEFAULT NULL,
   `LastName` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`),
