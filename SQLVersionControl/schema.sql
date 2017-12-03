@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `course` (
+  `CourseID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(10) unsigned NOT NULL,
+  `Code` int(11) DEFAULT NULL,
+  `CourseName` varchar(128) DEFAULT NULL,
+  `Category` tinyint(4) DEFAULT NULL,
+  `Group` tinyint(4) DEFAULT NULL,
+  `Credit` tinyint(1) DEFAULT NULL,
+  `Teacher` varchar(128) DEFAULT NULL,
+  `Day1Start` int(11) DEFAULT NULL,
+  `Day1End` int(11) DEFAULT NULL,
+  `Day2Start` int(11) DEFAULT NULL,
+  `Day2End` int(11) DEFAULT NULL,
+  `Day3Start` int(11) DEFAULT NULL,
+  `Day3End` int(11) DEFAULT NULL,
+  `ExamDate` timestamp NULL DEFAULT NULL,
+  `ExamDuration` int(11) DEFAULT NULL,
+  `Semester` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CourseID`),
+  KEY `FK_UserID_Course_Student_idx` (`UserID`),
+  CONSTRAINT `FK_UserID_Course_Student` FOREIGN KEY (`UserID`) REFERENCES `student` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `major`
 --
 
@@ -44,7 +75,7 @@ CREATE TABLE `student` (
   `State` varchar(128) NOT NULL,
   `Substate` varchar(128) DEFAULT NULL,
   `MajorID` int(11) DEFAULT NULL,
-  `RegistrationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `RegistrationDate` date NOT NULL,
   `FirstName` varchar(128) DEFAULT NULL,
   `LastName` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`),
