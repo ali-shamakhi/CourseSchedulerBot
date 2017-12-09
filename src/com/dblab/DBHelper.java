@@ -42,6 +42,7 @@ public class DBHelper {
         _con.createStatement().execute("INSERT INTO student (UserID, State, RegistrationDate) VALUES (" + userID + ", \"" + StateNewUser.VALUE + "\", NOW())");
     }
 
+    // student table
     public static final String FIELD_UserID = "UserID";
     public static final String FIELD_State = "State";
     public static final String FIELD_Substate = "Substate";
@@ -49,9 +50,27 @@ public class DBHelper {
     public static final String FIELD_FirstName = "FirstName";
     public static final String FIELD_LastName = "LastName";
 
+    // major table
     public static final String FIELD_MajorID = "MajorID";
     public static final String FIELD_MajorName = "MajorName";
     public static final String FIELD_University = "University";
+    public static final String FIELD_CourseID = "CourseID";
+    public static final String FIELD_Code = "Code";
+    public static final String FIELD_CourseName = "CourseName";
+    public static final String FIELD_Category = "Category";
+    public static final String FIELD_Credit = "Credit";
+    public static final String FIELD_Teacher = "Teacher";
+    public static final String FIELD_Day1Start = "Day1Start";
+    public static final String FIELD_Day1End = "Day1End";
+    public static final String FIELD_Day2Start = "Day2Start";
+    public static final String FIELD_Day2End = "Day2End";
+    public static final String FIELD_Day3Start = "Day3Start";
+    public static final String FIELD_Day3End = "Day3End";
+    public static final String FIELD_ExamDate = "ExamDate";
+    public static final String FIELD_ExamDurationMinute = "ExamDurationMinute";
+    public static final String FIELD_Semester = "Semester";
+
+    // course table
     public static final String FIELD_EntranceYear = "EntranceYear";
 
     private static boolean isStringType(String field) {
@@ -65,6 +84,21 @@ public class DBHelper {
         else if (field.equals(FIELD_MajorName)) return true;
         else if (field.equals(FIELD_University)) return true;
         else if (field.equals(FIELD_EntranceYear)) return false;
+        else if (field.equals(FIELD_CourseID)) return false;
+        else if (field.equals(FIELD_Code)) return false;
+        else if (field.equals(FIELD_CourseName)) return true;
+        else if (field.equals(FIELD_Category)) return false;
+        else if (field.equals(FIELD_Credit)) return false;
+        else if (field.equals(FIELD_Teacher)) return true;
+        else if (field.equals(FIELD_Day1Start)) return false;
+        else if (field.equals(FIELD_Day1End)) return false;
+        else if (field.equals(FIELD_Day2Start)) return false;
+        else if (field.equals(FIELD_Day2End)) return false;
+        else if (field.equals(FIELD_Day3Start)) return false;
+        else if (field.equals(FIELD_Day3End)) return false;
+        else if (field.equals(FIELD_ExamDate)) return true;
+        else if (field.equals(FIELD_ExamDurationMinute)) return false;
+        else if (field.equals(FIELD_Semester)) return false;
         else throw new RuntimeException("isStringType(field): Unknown field " + field);
     }
 
