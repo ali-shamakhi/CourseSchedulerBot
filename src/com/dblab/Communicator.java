@@ -1,5 +1,6 @@
 package com.dblab;
 
+import com.dblab.model.ProfileModel;
 import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -12,23 +13,9 @@ import java.util.IllegalFormatException;
 public class Communicator {
 
     public static void showProfile(TelegramBot bot, long chatID, int userID) throws SQLException {
-        String firstName, lastName, majorName, university;
-        int entranceYear;
-        String profile;
-
-        firstName = (String) DBHelper.getStudentField(userID, DBHelper.FIELD_FirstName);
-        lastName = (String) DBHelper.getStudentField(userID, DBHelper.FIELD_LastName);
-        majorName = (String) DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_MajorName);
-        university = (String) DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_University);
-        if (DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_EntranceYear) != null) {
-            entranceYear = (Integer) DBHelper.getMajorFieldForUser(userID, DBHelper.FIELD_EntranceYear);
-            profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: " + entranceYear;
-        }
-        else {
-            profile = "Your Profile:\nName: " + firstName + " " + lastName + "\nMajor: " + majorName + "\nUniversity: " + university + "\nEntrance Year: null";
-        }
-
-        sendMessage(bot, chatID, profile);
+        ProfileModel profile = DBHelper.getStudentProfile(userID);
+        String message = "Your Profile:\nName: " + profile.firstName + " " + profile.lastName + "\nMajor: " + profile.majorName + "\nUniversity: " + profile.university + "\nEntrance Year: " + profile.entranceYear;
+        sendMessage(bot, chatID, message);
     }
 
     public static void sendMessage(TelegramBot bot, long chatID, String text) {
