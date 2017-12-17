@@ -27,7 +27,35 @@ public class Convert {
     }
 
     static String getWeekTimeString(int weekMinute) throws IllegalArgumentException {
-        // TODO: implement
-        throw new IllegalArgumentException();
+        String weekDay;
+        switch (weekMinute / (24 * 60)) {
+            case 0:
+                weekDay = "Sat";
+                break;
+            case 1:
+                weekDay = "Sun";
+                break;
+            case 2:
+                weekDay = "Mon";
+                break;
+            case 3:
+                weekDay = "Tue";
+                break;
+            case 4:
+                weekDay = "Wed";
+                break;
+            case 5:
+                weekDay = "Thu";
+                break;
+            case 6:
+                weekDay = "Fri";
+                break;
+            default:
+                throw new IllegalArgumentException("weekMinute must be in range [0, " + (7 * 24 * 60 - 1) + "]");
+        }
+        int dayMinute = weekMinute % (24 * 60);
+        int hour = dayMinute / 60;
+        int minute = dayMinute % 60;
+        return weekDay + " " + String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
 }

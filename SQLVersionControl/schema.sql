@@ -28,7 +28,6 @@ CREATE TABLE `course` (
   `Code` int(11) DEFAULT NULL,
   `CourseName` varchar(128) DEFAULT NULL,
   `Category` tinyint(4) DEFAULT NULL,
-  `Group` tinyint(4) DEFAULT NULL,
   `Credit` tinyint(1) DEFAULT NULL,
   `Teacher` varchar(128) DEFAULT NULL,
   `Day1Start` int(11) DEFAULT NULL,
@@ -38,11 +37,11 @@ CREATE TABLE `course` (
   `Day3Start` int(11) DEFAULT NULL,
   `Day3End` int(11) DEFAULT NULL,
   `ExamDate` timestamp NULL DEFAULT NULL,
-  `ExamDuration` int(11) DEFAULT NULL,
+  `ExamDurationMinute` tinyint(4) DEFAULT NULL,
   `Semester` int(11) DEFAULT NULL,
   PRIMARY KEY (`CourseID`),
-  KEY `FK_UserID_Course_Student_idx` (`UserID`),
-  CONSTRAINT `FK_UserID_Course_Student` FOREIGN KEY (`UserID`) REFERENCES `student` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `Course_UserID_FK_idx` (`UserID`),
+  CONSTRAINT `Course_UserID_FK` FOREIGN KEY (`UserID`) REFERENCES `student` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,7 +58,7 @@ CREATE TABLE `major` (
   `University` varchar(128) NOT NULL,
   `EntranceYear` int(11) unsigned NOT NULL,
   PRIMARY KEY (`MajorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,14 +74,14 @@ CREATE TABLE `student` (
   `State` varchar(128) NOT NULL,
   `Substate` varchar(128) DEFAULT NULL,
   `MajorID` int(11) DEFAULT NULL,
-  `RegistrationDate` date NOT NULL,
+  `RegistrationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `FirstName` varchar(128) DEFAULT NULL,
   `LastName` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   KEY `FK_student_major_MajorID_idx` (`MajorID`),
   CONSTRAINT `FK_student_major_MajorID` FOREIGN KEY (`MajorID`) REFERENCES `major` (`MajorID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
