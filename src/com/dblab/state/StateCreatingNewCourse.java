@@ -1,5 +1,6 @@
 package com.dblab.state;
 
+import com.dblab.Categories;
 import com.dblab.Communicator;
 import com.dblab.DBHelper;
 import com.dblab.Main;
@@ -59,29 +60,74 @@ public class StateCreatingNewCourse {
             }
         }
         else if (substate.equals(GET_COURSE_NAME)) {
-            if (!message.text().trim().equals("")) {
-                userCourseMap.get(message.from().id()).courseName = message.text();
+            String courseName = message.text();
+            if (!courseName.trim().equals("")) {
+                userCourseMap.get(message.from().id()).courseName = courseName;
                 DBHelper.setStudentSubstate(message.from().id(), GET_CATEGORY);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter course category:");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Choose course category:");
+                // TODO: buttons
             } else {
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Please enter course category:");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Please enter course name:");
             }
         }
         else if (substate.equals(GET_CATEGORY)) {
+            // TODO: check whether it operates with buttons
             String categoryName = message.text();
-            // TODO: continue
-            if (!message.text().trim().equals("")) {
-                userCourseMap.get(message.from().id()).courseName = message.text();
-                DBHelper.setStudentSubstate(message.from().id(), GET_CATEGORY);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter course category:");
+            if (!categoryName.trim().equals("")) {
+                userCourseMap.get(message.from().id()).category = Categories.getCode(categoryName);
+                DBHelper.setStudentSubstate(message.from().id(), GET_CREDIT);
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter course credit:\nA course credit should be between 0 to 6");
             } else {
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Please enter course category:");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Please choose one of the course categories below:");
+                // TODO: buttons
             }
         }
-        else if (substate.equals(GET_CREDIT)) {}
-        else if (substate.equals(GET_TEACHER)) {}
-        else if (substate.equals(GET_DAY1START)) {}
-        else if (substate.equals(GET_DAY1END)) {}
+        else if (substate.equals(GET_CREDIT)) {
+            int credit;
+            try {
+                credit = Integer.parseInt(message.text());
+                if (0 <= credit && credit <= 6) {
+                    userCourseMap.get(message.from().id()).credit = credit;
+                    DBHelper.setStudentSubstate(message.from().id(), GET_TEACHER);
+                    Communicator.sendMessage(Main.bot, message.chat().id(), "Enter teacher's name:");
+                }
+                else {
+                    Communicator.sendMessage(Main.bot, message.chat().id(), "A course credit should be between 0 to 6.\nPlease enter course credit again:");
+                }
+            }
+            catch (NumberFormatException e) {
+                Communicator.sendMessage(Main.bot, message.chat().id(), "A course credit should be an integer number between 0 to 6.\nPlease enter course credit again:");
+            }
+        }
+        else if (substate.equals(GET_TEACHER)) {
+            String teacherName = message.text();
+            if (!teacherName.trim().equals("")) {
+                userCourseMap.get(message.from().id()).teacher = teacherName;
+                DBHelper.setStudentSubstate(message.from().id(), GET_DAY1START);
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter the start of the first session of course in week by this format:\n" +
+                        "Weekday HH:mm\n" +
+                        "(HH in 24 hour format)\n");
+            } else {
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Please enter teacher's name");
+            }
+        }
+        else if (substate.equals(GET_DAY1START)) {
+            int day1Start = Convert.weekMinute(message.text());
+            userCourseMap.get(message.from().id()).day1Start = day1Start;
+            DBHelper.setStudentSubstate(message.from().id(), GET_DAY1END);
+            Communicator.sendMessage(Main.bot, message.chat().id(), "Enter the end of the first session of course in week by this format:\n" +
+                    "Weekday HH:mm\n" +
+                    "(HH in 24 hour format)\n");
+        }
+        else if (substate.equals(GET_DAY1END)) {
+            int day1End = Convert.weekMinute(message.text());
+            userCourseMap.get(message.from().id()).day1End = day1End;
+            DBHelper.setStudentSubstate(message.from().id(), GET_DAY2START);
+            Communicator.sendMessage(Main.bot, message.chat().id(), "Enter the start of the second session of course in week by this format:\n" +
+                    "Weekday HH:mm\n" +
+                    "(HH in 24 hour format)\n"+
+                    "Press /last if the course holds only one session in the week");
+        }
         else if (substate.equals(GET_DAY2START)) {}
         else if (substate.equals(GET_DAY2END)) {}
         else if (substate.equals(GET_DAY3START)) {}
