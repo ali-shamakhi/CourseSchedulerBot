@@ -59,7 +59,7 @@ CREATE TABLE `major` (
   `University` varchar(128) NOT NULL,
   `EntranceYear` int(11) unsigned NOT NULL,
   PRIMARY KEY (`MajorID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE `student` (
   UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   KEY `FK_student_major_MajorID_idx` (`MajorID`),
   CONSTRAINT `FK_student_major_MajorID` FOREIGN KEY (`MajorID`) REFERENCES `major` (`MajorID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
