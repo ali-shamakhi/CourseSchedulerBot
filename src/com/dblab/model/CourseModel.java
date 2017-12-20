@@ -8,12 +8,12 @@ public class CourseModel {
     public String teacher;
     public int day1Start;
     public int day1End;
-    public int day2Start;
-    public int day2End;
-    public int day3Start;
-    public int day3End;
-    public long examDate;
-    public int examDurationMinute;
+    public int day2Start = -1;
+    public int day2End = -1;
+    public int day3Start = -1;
+    public int day3End = -1;
+    public long examDate = -1;
+    public int examDurationMinute = -1;
     public int semester;
 
     public boolean isDataReady() {

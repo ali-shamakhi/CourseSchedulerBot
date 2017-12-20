@@ -1,7 +1,7 @@
 package com.dblab.util;
 
 public class Convert {
-    static int getWeekMinute(String weekTime) throws IllegalArgumentException {
+    public static int getWeekMinute(String weekTime) throws IllegalArgumentException {
         weekTime = weekTime.trim();
         if (!weekTime.matches(".{3,} +[0-9]{2}:[0-9]{2}")) throw new IllegalArgumentException("Weekday and Time are not in the format:\nWeekday HH:mm");
         String[] wtPart = weekTime.split(" +");
