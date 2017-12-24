@@ -5,6 +5,7 @@ import com.dblab.DBHelper;
 import com.dblab.Main;
 import com.pengrad.telegrambot.model.Message;
 
+import java.lang.management.ManagementFactory;
 import java.sql.SQLException;
 
 public class StateFunctionList {
@@ -20,13 +21,13 @@ public class StateFunctionList {
             Communicator.sendMessage(Main.bot, message.chat().id(), "Enter your first name please:");
         }
         else if (message.text().equals("/add_course")) {
-            Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
+            //Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
+            DBHelper.setStudentState(message.from().id(), StateCreatingNewCourse.VALUE);
+            DBHelper.setStudentSubstate(message.from().id(), StateCreatingNewCourse.GET_CODE);
+            Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Course Code:");
         }
         else if (message.text().equals("/list_courses")) {
             Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
         }
-        else if (message.text().equals("/delete_course")) {
-            Communicator.sendMessage(Main.bot, message.chat().id(), "Not Implemented Yet!");
-            }
     }
 }
