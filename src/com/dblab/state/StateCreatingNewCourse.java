@@ -7,9 +7,13 @@ import com.dblab.Main;
 import com.dblab.model.CourseModel;
 import com.dblab.model.UserMap;
 import com.dblab.util.Convert;
+import com.dblab.util.PersianDate;
+import com.dblab.util.PersianDateFormat;
 import com.pengrad.telegrambot.model.Message;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Created by sanei on 11/12/2017.
@@ -132,7 +136,8 @@ public class StateCreatingNewCourse {
         else if (substate.equals(GET_DAY2START)) {
             if (message.text().equals("/last")) {
                 DBHelper.setStudentSubstate(message.from().id(), GET_EXAM_DATE);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Exam Date in the format YY.MM.DD\nor press /no_exam");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Exam Date in the format shown below, or press /no_exam\n" +
+                        "31 فروردین 1396");
             }
             else {
                 int day2Start = Convert.getWeekMinute(message.text());
@@ -155,7 +160,8 @@ public class StateCreatingNewCourse {
         else if (substate.equals(GET_DAY3START)) {
             if (message.text().equals("/last")) {
                 DBHelper.setStudentSubstate(message.from().id(), GET_EXAM_DATE);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Exam Date in the format YY.MM.DD\nor press /no_exam");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Exam Date in the format shown below, or press /no_exam\n" +
+                        "31 فروردین 1396");
             }
             else {
                 int day3Start = Convert.getWeekMinute(message.text());
@@ -170,19 +176,26 @@ public class StateCreatingNewCourse {
             int day3End = Convert.getWeekMinute(message.text());
             userCourseMap.get(message.from().id()).day3End = day3End;
             DBHelper.setStudentSubstate(message.from().id(), GET_EXAM_DATE);
-            Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Exam Date in the format YY.MM.DD\nor press /no_exam");
+            Communicator.sendMessage(Main.bot, message.chat().id(), "Enter Exam Date in the format shown below, or press /no_exam\n" +
+                    "31 فروردین 1396");
         }
         else if (substate.equals(GET_EXAM_DATE)) {
             if (message.text().equals("/no_exam")) {
                 DBHelper.setStudentSubstate(message.from().id(), GET_SEMESTER);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter semester in the format YYYS:");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter semester in the format YYYS, between 3901 and 4492:");
             }
             else {
-                // TODO implement
-                //int examDate = message.text();
-                //userCourseMap.get(message.from().id()).examDate = examDate;
-                DBHelper.setStudentSubstate(message.from().id(), GET_EXAM_DURATION_MINUTE);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter the duration of exam in minutes:");
+                String dateString = message.text().trim().replaceAll("\\s+", " ");
+                PersianDateFormat pdf = new PersianDateFormat("j F Y");
+                try {
+                    PersianDate pd = pdf.parse(dateString);
+                    userCourseMap.get(message.from().id()).examDate = pd.getTime();
+                    DBHelper.setStudentSubstate(message.from().id(), GET_EXAM_DURATION_MINUTE);
+                    Communicator.sendMessage(Main.bot, message.chat().id(), "Enter the duration of exam in minutes:");
+                } catch (ParseException pe) {
+                    Communicator.sendMessage(Main.bot, message.chat().id(), "Please enter Exam Date in the format shown below, or press /no_exam\n" +
+                            "31 فروردین 1396");
+                }
             }
         }
         else if (substate.equals(GET_EXAM_DURATION_MINUTE)) {
@@ -190,12 +203,25 @@ public class StateCreatingNewCourse {
                 int examDuration = Integer.parseInt(message.text());
                 userCourseMap.get(message.from().id()).examDurationMinute = examDuration;
                 DBHelper.setStudentSubstate(message.from().id(), GET_SEMESTER);
-                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter semester in the format YYYS:");
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Enter semester in the format YYYS, between 3901 and 4492:");
             }
             catch (NumberFormatException e) {
                 Communicator.sendMessage(Main.bot, message.chat().id(), "Duration must be an integer number\nEnter the duration of exam in minutes:");
             }
         }
-        else if (substate.equals(GET_SEMESTER)) {}
+        else if (substate.equals(GET_SEMESTER)) {
+            try {
+                int semester = Integer.parseInt(message.text());
+                if (semester < 3901 || semester > 4492) {
+                    throw new NumberFormatException();
+                }
+                userCourseMap.get(message.from().id()).semester = semester;
+                DBHelper.setStudentSubstate(message.from().id(), null);
+                DBHelper.setStudentState(message.from().id(), StateMainScreen.VALUE);
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Course added successfully.\nPress /menu to see available functions.");
+            } catch (NumberFormatException e) {
+                Communicator.sendMessage(Main.bot, message.chat().id(), "Please enter semester in the format YYYS, between 3901 and 4492:");
+            }
+        }
     }
 }
