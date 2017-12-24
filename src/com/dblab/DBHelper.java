@@ -1,5 +1,6 @@
 package com.dblab;
 
+import com.dblab.model.CourseModel;
 import com.dblab.model.MajorModel;
 import com.dblab.model.ProfileModel;
 import com.dblab.state.StateNewUser;
@@ -238,6 +239,27 @@ public class DBHelper {
     public static void setStudentMajorByFields(int userID, MajorModel majorModel) throws SQLException {
         _con.createStatement().execute("CALL SET_STUDENT_MAJOR_BY_FIELDS ("
                 + userID + ", \"" + majorModel.majorName + "\", \"" + majorModel.university + "\", " + majorModel.entranceYear + ")");
+    }
+
+    public static void addStudentCourseByFields(int userID, CourseModel courseModel) throws SQLException {
+        _con.createStatement().execute("CALL ADD_STUDENT_COURSE_BY_FIELDS ("
+                + userID
+                + ", " + courseModel.code
+                + ", \"" + courseModel.courseName + "\""
+                + ", " + courseModel.category
+                + ", " + courseModel.credit
+                + ", \"" + courseModel.teacher + "\""
+                + ", " + courseModel.day1Start
+                + ", " + courseModel.day1End
+                + ", " + courseModel.day2Start
+                + ", " + courseModel.day2End
+                + ", " + courseModel.day3Start
+                + ", " + courseModel.day3End
+                + ", " + courseModel.examDate
+                + ", " + courseModel.examDurationMinute
+                + ", " + courseModel.semester
+                + ")"
+        );
     }
 
     static ProfileModel getStudentProfile(int userID) throws SQLException {

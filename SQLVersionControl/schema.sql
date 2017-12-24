@@ -25,11 +25,10 @@ DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `CourseID` int(11) NOT NULL AUTO_INCREMENT,
   `UserID` int(10) unsigned NOT NULL,
-  `Code` int(11) DEFAULT NULL,
-  `CourseName` varchar(128) DEFAULT NULL,
-  `Category` tinyint(4) DEFAULT NULL,
-  `Group` tinyint(4) DEFAULT NULL,
-  `Credit` tinyint(1) DEFAULT NULL,
+  `Code` int(11) NOT NULL,
+  `CourseName` varchar(128) NOT NULL,
+  `Category` tinyint(4) NOT NULL,
+  `Credit` tinyint(1) NOT NULL,
   `Teacher` varchar(128) DEFAULT NULL,
   `Day1Start` int(11) DEFAULT NULL,
   `Day1End` int(11) DEFAULT NULL,
@@ -38,11 +37,11 @@ CREATE TABLE `course` (
   `Day3Start` int(11) DEFAULT NULL,
   `Day3End` int(11) DEFAULT NULL,
   `ExamDate` timestamp NULL DEFAULT NULL,
-  `ExamDuration` int(11) DEFAULT NULL,
-  `Semester` int(11) DEFAULT NULL,
+  `ExamDurationMinute` tinyint(4) DEFAULT NULL,
+  `Semester` int(11) NOT NULL,
   PRIMARY KEY (`CourseID`),
-  KEY `FK_UserID_Course_Student_idx` (`UserID`),
-  CONSTRAINT `FK_UserID_Course_Student` FOREIGN KEY (`UserID`) REFERENCES `student` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `Course_UserID_FK_idx` (`UserID`),
+  CONSTRAINT `Course_UserID_FK` FOREIGN KEY (`UserID`) REFERENCES `student` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,7 +58,7 @@ CREATE TABLE `major` (
   `University` varchar(128) NOT NULL,
   `EntranceYear` int(11) unsigned NOT NULL,
   PRIMARY KEY (`MajorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,19 +74,43 @@ CREATE TABLE `student` (
   `State` varchar(128) NOT NULL,
   `Substate` varchar(128) DEFAULT NULL,
   `MajorID` int(11) DEFAULT NULL,
-  `RegistrationDate` date NOT NULL,
+  `RegistrationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `FirstName` varchar(128) DEFAULT NULL,
   `LastName` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   KEY `FK_student_major_MajorID_idx` (`MajorID`),
   CONSTRAINT `FK_student_major_MajorID` FOREIGN KEY (`MajorID`) REFERENCES `major` (`MajorID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping routines for database 'db_coursescheduler'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `ADD_STUDENT_COURSE_BY_FIELDS` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ADD_STUDENT_COURSE_BY_FIELDS`(IN uid int(10), IN cod int(11), IN coname varchar(128), IN category tinyint(4), IN credit tinyint(1), 
+					IN teacher varchar(128), IN d1s int(11), IN d1e int(11), IN d2s int(11), IN d2e int(11), IN d3s int(11), IN d3e int(11), 
+					IN examdate timestamp, IN examduration tinyint(4), IN semester int(11))
+BEGIN
+
+	INSERT INTO course (UserID, `Code`, CourseName, Category, Credit, Teacher, Day1Start, Day1End, Day2Start, Day2End, Day3Start, Day3End, ExamDate, ExamDurationMinute, Semester)
+				VALUES (uid,	cod,	coname,		category, credit, teacher, d1s,		  d1e,		d2s,	  d2e,		d3s,	  d3e,		examdate, examduration,		 semester);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SET_STUDENT_MAJOR_BY_FIELDS` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
